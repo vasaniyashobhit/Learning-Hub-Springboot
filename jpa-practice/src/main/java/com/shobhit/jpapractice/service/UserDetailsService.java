@@ -22,4 +22,20 @@ public class UserDetailsService {
     public List<UserDetails> getAllUsers(){
         return userDetailsRepository.findAll();
     }
+
+    public List<UserDetails> searchByName(String name){
+        return userDetailsRepository.findByName(name);
+    }
+
+    public List<UserDetails> searchByKeyword(String keyword) {
+        return userDetailsRepository.findByNameContaining(keyword);
+    }
+
+    public List<UserDetails> searchByDomain(String domain) {
+        return userDetailsRepository.findByEmailDomain(domain);
+    }
+
+    public String getNameOnly(Long id) {
+        return userDetailsRepository.getNameOnlyById(id);
+    }
 }

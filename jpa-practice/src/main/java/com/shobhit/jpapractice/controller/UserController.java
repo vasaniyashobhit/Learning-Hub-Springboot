@@ -70,4 +70,24 @@ public class UserController {
         return entityManagerDemoService.reattachAndSaveDetachedEntity(detachedUser);
     }
 
+    @GetMapping("/users/by-name")
+    public List<UserDetails> searchByExactName(@RequestParam String name){
+        return userDetailsService.searchByName(name);
+    }
+
+    @GetMapping("/users/contains")
+    public List<UserDetails> searchContainingKeyword(@RequestParam String keyword) {
+        return userDetailsService.searchByKeyword(keyword);
+    }
+
+    @GetMapping("/users/by-domain")
+    public List<UserDetails> searchByDomain(@RequestParam String domain){
+        return userDetailsService.searchByDomain(domain);
+    }
+
+    @GetMapping("/users/{id}/name-only")
+    public String getJustTheName(@PathVariable Long id) {
+        return userDetailsService.getNameOnly(id);
+    }
+
 }
