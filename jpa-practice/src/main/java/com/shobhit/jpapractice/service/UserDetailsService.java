@@ -5,8 +5,10 @@ import com.shobhit.jpapractice.entity.UserDetails;
 import com.shobhit.jpapractice.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.shobhit.jpapractice.dto.UserResponseDTO;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 
@@ -16,6 +18,7 @@ public class UserDetailsService {
     private UserDetailsRepository userDetailsRepository;
 
     public UserDetails saveUser(UserDetails user){
+        user.setInternalAdminNote("Created via API - flagged for review");
         UserDetails savedUser = userDetailsRepository.save(user);
         return savedUser;
     }
@@ -43,4 +46,26 @@ public class UserDetailsService {
     public UserDetails getUserById(Long id){
         return userDetailsRepository.findById(id).orElseThrow(()->new UserNotFoundException(id));
     }
+
+    public UserResponseDTO getUserDtoById(Long id){
+        UserDetails user = userDetailsRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        UserResponseDTO dto = new UserResponseDTO(user.getId(), user.getName(), user.getEmail());
+        return dto;
+    }
+
+    public List<UserResponseDTO> getAllUsersAsDto(){
+        List<UserDetails> allUsers = userDetailsRepository.findAll();
+
+        return allUsers.stream()
+                .map(user -> new UserResponseDTO(
+                    user.getId(),
+                    user.getName(),
+                    user.getEmail()))
+                .collect(Collectors.toList());
+
+    }
+
+
 }

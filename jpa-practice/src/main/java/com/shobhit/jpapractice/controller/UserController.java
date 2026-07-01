@@ -1,5 +1,6 @@
 package com.shobhit.jpapractice.controller;
 
+import com.shobhit.jpapractice.dto.UserResponseDTO;
 import com.shobhit.jpapractice.entity.UserDetails;
 import com.shobhit.jpapractice.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,16 @@ public class UserController {
     @GetMapping("/users/{id}")
     public UserDetails getUserById(@PathVariable Long id){
         return userDetailsService.getUserById(id);
+    }
+
+    @GetMapping("/users/dto/{id}")
+    public UserResponseDTO getUserDto(@PathVariable Long id) {
+        return userDetailsService.getUserDtoById(id);
+    }
+
+    @GetMapping("/users/dto")
+    public List<UserResponseDTO> getAllUsersDto() {
+        return userDetailsService.getAllUsersAsDto();
     }
 
 }
