@@ -90,4 +90,9 @@ public class UserController {
         return userDetailsService.getNameOnly(id);
     }
 
+    @GetMapping("/users/{id}")
+    public UserDetails getUserById(@PathVariable Long id){
+        return userDetailsService.getUserById(id);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.shobhit.jpapractice.service;
 
+import com.shobhit.jpapractice.exception.UserNotFoundException;
 import com.shobhit.jpapractice.entity.UserDetails;
 import com.shobhit.jpapractice.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,9 @@ public class UserDetailsService {
 
     public String getNameOnly(Long id) {
         return userDetailsRepository.getNameOnlyById(id);
+    }
+
+    public UserDetails getUserById(Long id){
+        return userDetailsRepository.findById(id).orElseThrow(()->new UserNotFoundException(id));
     }
 }
